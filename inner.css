@@ -1,0 +1,100 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'ads', sans-serif;
+}
+
+#main {
+    position: relative;
+    overflow: hidden;
+}
+
+#page2 {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+}
+
+#page2 video {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; 
+}
+
+#page2 {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#page2 > nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 30px;
+    position: absolute;
+    height: 10vh;
+    width: 100%;
+    z-index: 100;
+}
+
+#page2 nav img {
+    height: 60px;
+    width: auto;
+}
+
+@font-face {
+    font-family: 'ads';
+    src: url('ads.otf') format('opentype');
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00ffff;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff0080;
+}
+
+/* Ensure content is scrollable */
+.content-container {
+    max-height: 85vh;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .character-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    
+    .header-title {
+        font-size: 2em;
+    }
+    
+    .character-card {
+        padding: 15px;
+    }
+    
+    .character-name {
+        font-size: 1.5em;
+    }
+    
+    .content-container {
+        padding: 10px;
+        top: 12vh;
+    }
+}

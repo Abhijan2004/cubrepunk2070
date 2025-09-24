@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arasaka Database - Cyberpunk Edgerunners</title>
+    <link rel="stylesheet" href="inner.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'ads';
+            src: url('ads.otf') format('opentype');
+        }
+
+        #transitionOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            z-index: 9999;
+        }
+
+        .content-container {
+            position: absolute;
+            top: 15vh;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .character-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'ads', sans-serif;
+            color: beige;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+            border-color: #ff0080;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .character-card:hover::before {
+            left: 100%;
+        }
+
+        .character-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            animation: flicker 3s infinite alternate;
+        }
+
+        .character-role {
+            color: #ff0080;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .character-info {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .character-info strong {
+            color: #ffff00;
+        }
+
+        .header-title {
+            text-align: center;
+            font-family: 'ads', sans-serif;
+            color: beige;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #00ffff;
+            animation: cyberpunk-flicker-glitch 2s infinite alternate;
+        }
+
+        .arasaka-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .classification {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            25% { opacity: 0.3; }
+            50% { opacity: 1; }
+            75% { opacity: 0.1; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes cyberpunk-flicker-glitch {
+            0%, 100% {
+                opacity: 1;
+                transform: translate(0, 0);
+                text-shadow: 0 0 5px #00ffff;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translate(-2px, 1px);
+                text-shadow: -2px 0 3px red, 2px 0 3px blue;
+            }
+            20% {
+                opacity: 0.6;
+                transform: translate(1px, -2px);
+                text-shadow: 2px 0 3px red, -2px 0 3px blue;
+            }
+            50% {
+                opacity: 0.2;
+                transform: translate(0, 0);
+                text-shadow: none;
+            }
+            90% {
+                opacity: 0.8;
+                transform: translate(2px, -1px);
+                text-shadow: 2px 0 3px blue, -2px 0 3px red;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-family: 'ads', sans-serif;
+            color: beige;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffff;
+            cursor: pointer;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+<div id="Main">
+    <div id="page2">
+        <nav>
+            <img src="Thumbnails-113.png" alt="Arasaka Logo">
+            <a href="3d.html" class="back-button">Back to Main</a>
+        </nav>
+
+        <video src="arasakay.mp4" autoplay loop muted></video>
+
+        <div class="content-container">
+            <div class="arasaka-logo">
+                <h1 class="header-title">ARASAKA DATABASE</h1>
+                <p style="text-align: center; color: #ff0080; font-family: 'ads', sans-serif; font-size: 1.2em;">CYBERPUNK EDGERUNNERS - SUBJECT PROFILES</p>
+            </div>
+
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="classification">CLASSIFIED</div>
+                    <div class="character-name">David Martinez</div>
+                    <div class="character-role">Edgerunner / Former Arasaka Academy Student</div>
+                    <div class="character-info"><strong>Age:</strong> 17</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Cyberware:</strong> Sandevistan (Military Grade)</div>
+                    <div class="character-info"><strong>Background:</strong> Former Arasaka Academy student who became Night City's most notorious edgerunner. Equipped with his mother's Sandevistan, he led a crew against Arasaka interests before succumbing to cyberpsychosis.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> EXTREME (Posthumous)</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">PRIORITY TARGET</div>
+                    <div class="character-name">Lucy (Lucyna Kushinada)</div>
+                    <div class="character-role">Netrunner</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> At Large</div>
+                    <div class="character-info"><strong>Specialty:</strong> Advanced Netrunning, Data Theft</div>
+                    <div class="character-info"><strong>Background:</strong> Former Arasaka test subject who escaped their experimental netrunner program. Possesses intimate knowledge of Arasaka's neural interface experiments. Currently believed to be residing on the Moon.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> HIGH</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">TERMINATED</div>
+                    <div class="character-name">Maine</div>
+                    <div class="character-role">Edgerunner Leader</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased (Cyberpsychosis)</div>
+                    <div class="character-info"><strong>Cyberware:</strong> Heavily Modified (Gorilla Arms, Subdermal Armor)</div>
+                    <div class="character-info"><strong>Background:</strong> Led an edgerunner crew specializing in anti-corporate operations. Suffered from advanced cyberpsychosis before being eliminated by MaxTac forces.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> NEUTRALIZED</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">ASSET</div>
+                    <div class="character-name">Adam Smasher</div>
+                    <div class="character-role">Arasaka Security</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Active</div>
+                    <div class="character-info"><strong>Enhancement:</strong> Full Body Cyborg Conversion</div>
+                    <div class="character-info"><strong>Background:</strong> Arasaka's premier solo operative. Nearly complete cybernetic replacement with minimal organic components remaining. Responsible for multiple high-value target eliminations.</div>
+                    <div class="character-info"><strong>Clearance Level:</strong> OMEGA</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">TERMINATED</div>
+                    <div class="character-name">Rebecca</div>
+                    <div class="character-role">Edgerunner</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Specialty:</strong> Heavy Weapons, Demolitions</div>
+                    <div class="character-info"><strong>Background:</strong> Compact-statured edgerunner with exceptional combat capabilities. Known for aggressive tactics and loyalty to crew members. Eliminated during final confrontation at Arasaka Tower.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> NEUTRALIZED</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">TERMINATED</div>
+                    <div class="character-name">Kiwi</div>
+                    <div class="character-role">Netrunner</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Specialty:</strong> Corporate Netrunning, Intelligence Gathering</div>
+                    <div class="character-info"><strong>Background:</strong> Skilled netrunner with corporate connections. Maintained covert communications with various factions. Eliminated during crew internal conflict.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> NEUTRALIZED</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">EXECUTIVE</div>
+                    <div class="character-name">Faraday</div>
+                    <div class="character-role">Arasaka Fixer</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Position:</strong> Corporate Liaison</div>
+                    <div class="character-info"><strong>Background:</strong> Arasaka-affiliated fixer who orchestrated operations against rival corporations. Maintained networks of edgerunners for corporate interests. Eliminated due to operational failures.</div>
+                    <div class="character-info"><strong>Clearance Level:</strong> REVOKED</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">TERMINATED</div>
+                    <div class="character-name">Dorio</div>
+                    <div class="character-role">Edgerunner</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Specialty:</strong> Combat Support, Medical Aid</div>
+                    <div class="character-info"><strong>Background:</strong> Maine's partner and crew medic. Provided tactical support and medical assistance during operations. Eliminated during MaxTac engagement.</div>
+                    <div class="character-info"><strong>Threat Level:</strong> NEUTRALIZED</div>
+                </div>
+
+                <div class="character-card">
+                    <div class="classification">ACTIVE INVESTIGATION</div>
+                    <div class="character-name">Gloria Martinez</div>
+                    <div class="character-role">EMT / Arasaka Employee (Former)</div>
+                    <div class="character-info"><strong>Age:</strong> Unknown</div>
+                    <div class="character-info"><strong>Status:</strong> Deceased</div>
+                    <div class="character-info"><strong>Position:</strong> Emergency Medical Technician</div>
+                    <div class="character-info"><strong>Background:</strong> Single mother working multiple jobs including EMT duties. Acquired military-grade Sandevistan through unknown means. Investigation into acquisition source ongoing.</div>
+                    <div class="character-info"><strong>Security Clearance:</strong> BASIC (Revoked)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="3d.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Audio continuation from previous page
+        if (localStorage.getItem('audioSrc')) {
+            var audio = new Audio(localStorage.getItem('audioSrc'));
+            audio.currentTime = parseFloat(localStorage.getItem('audioTime'));
+            if (localStorage.getItem('audioPlaying') === 'playing') {
+                audio.play();
+            }
+            document.body.appendChild(audio);
+        }
+
+        // Fade in effect
+        setTimeout(function() {
+            const overlay = document.getElementById('transitionOverlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.remove(), 500);
+            }
+        }, 100);
+    });
+</script>
+</body>
+</html>

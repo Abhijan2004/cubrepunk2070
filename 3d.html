@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel = "stylesheet" href="3d.css"></link>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        #transitionOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    
+<div id="main">
+    <div id="page1">
+        <audio id="myAudio" src="inst.mp3" preload="auto"></audio>
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+        <nav>
+            <img src="Thumbnails-113.png" alt="">
+            <div >
+                <button id="pageright">Demo</button>
+                <button><i class="ri-menu-fill"></i></button>
+
+            </div>
+        </nav>
+        <div id="rightbottom">
+            <h1 id="typewriter-text">Arasaka:<br>Unwavering progress in Night City</br></h1>
+           
+            <button id="lowerbutton">Explore</button>
+            
+        </div>
+
+       
+        <video src="liv.mp4" type="video/mp4"  autoplay loop muted></video>
+    </div>
+</div>
+<script src="3d.js"></script>
+<script>
+    document.getElementById('lowerbutton').addEventListener('click', function() {
+        var audio = document.getElementById('myAudio');
+        localStorage.setItem('audioSrc', 'inst.mp3');
+        localStorage.setItem('audioTime', audio.currentTime);
+        localStorage.setItem('audioPlaying', audio.paused ? 'paused' : 'playing');
+        window.location.href = 'innerpage.html'; // Replace with your next page's filename
+    });
+</script>
+</body>
+</html>
